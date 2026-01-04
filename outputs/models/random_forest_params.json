@@ -1,0 +1,12 @@
+{
+    "best_params": {
+        "max_depth": null,
+        "max_features": 0.7,
+        "min_samples_leaf": 5,
+        "min_samples_split": 2,
+        "n_estimators": 200
+    },
+    "best_score": 0.7850426855334909,
+    "test_accuracy": 0.7887521968365554,
+    "timestamp": "2026-01-04 03:31:19"
+}

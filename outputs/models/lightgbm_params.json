@@ -1,0 +1,11 @@
+{
+    "best_params": {
+        "max_depth": null,
+        "max_features": "sqrt",
+        "min_samples_leaf": 5,
+        "n_estimators": 100
+    },
+    "best_score": 0.7408038100281351,
+    "test_accuracy": 0.7884007029876977,
+    "timestamp": "2026-01-04 03:34:40"
+}

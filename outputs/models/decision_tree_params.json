@@ -1,0 +1,12 @@
+{
+    "best_params": {
+        "min_samples_split": 2,
+        "min_samples_leaf": 50,
+        "max_features": null,
+        "max_depth": null,
+        "criterion": "entropy"
+    },
+    "best_score": 0.7353897770203656,
+    "test_accuracy": 0.7486818980667839,
+    "timestamp": "2026-01-04 02:27:48"
+}

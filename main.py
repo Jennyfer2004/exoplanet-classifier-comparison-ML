@@ -35,7 +35,8 @@ def main(args):
     print("\n Evaluando modelos...")
     model_names = ['Decision Tree', 'Random Forest', 'Logistic Regression', 'LightGBM']
     metrics_df = evaluate_all_models(X_val, y_val, model_names)
-    
+    # plots = evaluate_all_models(X_val, y_val,X_train,y_train, model_names)
+
     print("\n Generando reporte final...")
     report_path = os.path.join('outputs', 'reports', 'final_report.txt')
     with open(report_path, 'w') as f:

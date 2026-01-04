@@ -74,8 +74,7 @@ def train_random_forest(X_train,y_train,X_test,y_test):
     }
 
     # cv=5 validación cruzada de 5 pliegues.
-    # scoring='accuracy' le dice que la métrica a optimizar es la precisión.
-    # verbose=2 muestra más detalle del progreso.
+    # scoring='accuracy' la métrica a optimizar es la precisión.
     grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, 
                             cv=5, n_jobs=-1, verbose=2, scoring='accuracy')
 

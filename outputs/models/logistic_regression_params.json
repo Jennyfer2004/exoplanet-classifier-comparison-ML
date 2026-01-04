@@ -1,0 +1,9 @@
+{
+    "best_params": {
+        "C": 1,
+        "penalty": "l2"
+    },
+    "best_score": 0.6211445832218261,
+    "test_accuracy": 0.6172231985940246,
+    "timestamp": "2026-01-04 03:31:20"
+}

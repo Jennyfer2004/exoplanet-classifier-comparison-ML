@@ -53,7 +53,7 @@ Requisitos de Hardware
      CPU: 4+ núcleos recomendados.
      RAM: 8GB+ recomendados.
      Almacenamiento: ~500 MB de espacio libre para datos y modelos.
-     Tiempo de ejecución: ~15-30 minutos (dependiendo del hardware).
+     Tiempo de ejecución: ~15-90 minutos (dependiendo del hardware).
      
 
 Configuración del Entorno 

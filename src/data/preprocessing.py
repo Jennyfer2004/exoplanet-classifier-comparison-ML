@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+
 # Cambia el backend de matplotlib antes de importarlo
 import matplotlib
 matplotlib.use('Agg')  # Usa backend no interactivo
@@ -12,12 +13,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 load_dotenv()
-# cols_error_y_flags = os.getenv('COLS_ERROR_FLAGS')
-# cols_muchos_nulos = os.getenv('COLS_MUCHOS_NULOS')
-# cols_referencia = os.getenv('COLS_REFERENCIAS')
-# df_conservados = os.getenv('DF')
-# # name_ = os.getenv("NAME")
-# features=os.getenv("FEATURES")
 
 cols_muchos_nulos = ['pl_eqterr1', 'pl_eqterr2', 'st_spectype', 'pl_orbeccenerr1', 'pl_orbeccenerr2','pl_bmasse', 'pl_bmassj', 'pl_bmasseerr1', 'pl_bmasseerr2', 'pl_bmassjerr1', 'pl_bmassjerr2', 'pl_bmasselim', 'pl_bmassjlim', 'pl_bmassprov']
 cols_error_y_flags= ['pl_orbsmaxerr1', 'pl_orbsmaxerr2', 'pl_radeerr1', 'pl_radeerr2', 'pl_radjerr1', 'pl_radjerr2', 'st_raderr1', 'st_raderr2',  'st_masserr1', 'st_masserr2', 'st_meterr1', 'st_meterr2', 'st_loggerr1', 'st_loggerr2', 'pl_radelim', 'pl_radjlim', 'pl_orbperlim','pl_orbsmaxlim', 'st_tefflim', 'st_radlim', 'st_masslim', 'st_metlim', 'st_logglim','pl_eqtlim', 'pl_orbeccenlim', 'pl_insollim']
@@ -38,20 +33,19 @@ def nulos(df):
 
     nulos_ordenados = df.isnull().sum().sort_values(ascending=False)
 
-    plt.figure(figsize=(20, 12)) # Hacemos la figura más grande para que quepan las etiquetas
+    plt.figure(figsize=(20, 12)) 
     nulos_ordenados.plot(kind='bar', color='skyblue')
 
     plt.title('Cantidad de Valores Nulos por Columna', fontsize=16)
     plt.ylabel('Número de Nulos', fontsize=12)
     plt.xlabel('Columna', fontsize=12)
     plt.xticks(rotation=90, ha='right') 
-    plt.tight_layout() # Ajusta todo para que no se solape
+    plt.tight_layout() 
     plt.show()
 def columnas_nulas(df):
 
     columnas_a_eliminar = cols_muchos_nulos + cols_error_y_flags + cols_referencia
 
-    # Eliminar las columnas
     df_limpio = df.drop(columns=columnas_a_eliminar)
 
     print(f"Dimensiones originales: {df.shape}")
@@ -61,7 +55,6 @@ def columnas_nulas(df):
     return df_limpio
 
 def nulos_filas(df_limpio):
-    # Calcula el número de nulos en cada fila
     
     nulos_por_fila = df_limpio.isnull().sum(axis=1) 
 
@@ -70,14 +63,13 @@ def nulos_filas(df_limpio):
     
     nulos_por_fila = df_limpio.isnull().sum(axis=1)
     print(23)
-    # Crear el histograma
 
     plt.figure(figsize=(12, 7))
-    nulos_por_fila.hist(bins=29, edgecolor='black', align='left')  # 28+1 bins
+    nulos_por_fila.hist(bins=29, edgecolor='black', align='left')  
     plt.title('Distribución de Nulos por Fila')
     plt.xlabel('Número de Nulos en la Fila')
     plt.ylabel('Cantidad de Planetas (Filas)')
-    plt.xticks(range(0, 29, 2))  # Marcar cada 2 en el eje X
+    plt.xticks(range(0, 29, 2))  
     plt.grid(axis='y', alpha=0.75)
     
     # Guardar la figura en lugar de mostrarla
@@ -127,11 +119,10 @@ def rellenar(df_limpio):
     return df_limpio
 
 
-def load_data(name="../../data/raw/PS_2025.11.28_09.38.12.csv"):
+def load_data(name="./data/raw/PS_2025.11.28_09.38.12.csv"):
 
     df = pd.read_csv(name, skiprows=96, header=0)
     
-    # nulos(df)
     print("pase ni")
     df_limpio = columnas_nulas(df)
     a=nulos_filas(df_limpio)
@@ -139,12 +130,12 @@ def load_data(name="../../data/raw/PS_2025.11.28_09.38.12.csv"):
     columnas_a_eliminar = ["disc_year","disc_facility","pl_controv_flag","pl_insolerr1", "pl_insolerr2" , "default_flag","pl_name"]
     df_limpio = df.drop(columns=columnas_a_eliminar)
     df_limpio = rellenar(df_limpio)
-    # df_limpio.to_csv("non-null data.csv")
 
     return df_limpio
 
-def preprocess_data(name):
+def preprocess_data(name="../../data/raw/PS_2025.11.28_09.38.12.csv"):
     print(name)
+    print(f"Directorio de trabajo actual: {os.getcwd()}")
     df=load_data(name)
     print(2)
     df_transit = df[df['discoverymethod'] == 'Transit'].copy()
@@ -163,12 +154,11 @@ def preprocess_data(name):
     imputer = SimpleImputer(strategy='median')
     X_imputed = imputer.fit_transform(X)
 
-    # 2. Escalado: Estandarizamos los datos (media 0, desviación 1). ¡Esencial para LogisticRegression y bueno para otros!
+    #  Escalado: Estandarizamos los datos (media 0, desviación 1). ¡Esencial para LogisticRegression y bueno para otros!
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X_imputed)
 
-    # 3. División de Datos: Separamos en entrenamiento y prueba.
-    # Stratify=y es MUY IMPORTANTE para mantener la proporción de clases en ambos sets.
+    #División de Datos: Separamos en entrenamiento y prueba.
     X_train, X_test1, y_train, y_test1 = train_test_split(
         X_scaled, y, test_size=0.2, random_state=42, stratify=y
     )

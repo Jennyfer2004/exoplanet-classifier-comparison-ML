@@ -43,14 +43,12 @@ def evaluate_all_models(X_val, y_val, model_names, output_dir='outputs/reports')
         
         all_results.append(results)
         
-        # Guardar reporte de clasificación
         report = classification_report(y_val, y_pred)
         report_path = os.path.join(output_dir, f'{model_name.lower().replace(" ", "_")}_report.txt')
         with open(report_path, 'w') as f:
             f.write(f"Classification Report for {model_name}\n\n")
             f.write(report)
         
-        # Generar y guardar matriz de confusión
         cm = confusion_matrix(y_val, y_pred)
         plt.figure(figsize=(8, 6))
         sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
@@ -63,14 +61,11 @@ def evaluate_all_models(X_val, y_val, model_names, output_dir='outputs/reports')
         plt.savefig(fig_path, dpi=300, bbox_inches='tight')
         plt.close()
     
-    # Crear DataFrame con todas las métricas
     df_metrics = pd.DataFrame(all_results)
     
-    # Guardar tabla de métricas
     metrics_path = os.path.join(output_dir, 'all_models_metrics.csv')
     df_metrics.to_csv(metrics_path, index=False)
     
-    # Generar gráfico comparativo
     plt.figure(figsize=(12, 8))
     metrics = ['Accuracy', 'Precision', 'Recall', 'F1-Score', 'AUC']
     

@@ -1,4 +1,4 @@
-from models import *
+from src.data.preprocessing import *
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -6,9 +6,10 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, roc_auc_score,confusion_matrix
 from sklearn.model_selection import learning_curve
 
-def main():
-    X_val,y_val ,X_train, y_train,models_to_evaluate=main_models()
-    
+def main(X_val,y_val ,X_train, y_train,models_to_evaluate):
+
+    features= ['pl_orbper', 'pl_orbsmax', 'pl_rade', 'pl_orbeccen', 'pl_insol', 'pl_eqt','st_teff', 'st_rad', 'st_mass', 'st_met', 'st_logg','sy_snum', 'sy_pnum', 'sy_gaiamag']
+
     for i in range(len(models_to_evaluate)):
         best_model = models_to_evaluate[i][1] 
         y_pred = best_model.predict(X_val)

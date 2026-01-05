@@ -10,23 +10,32 @@ https://exoplanetarchive.ipac.caltech.edu/docs/exonews_archive.html
 Características (Features) 
 
 Se seleccionaron un conjunto de 14 características astronómicas y estelares para entrenar los modelos: 
-Característica
- 	
-Descripción
- 
- pl_orbper	Período Orbital (días) 
+  
+pl_orbper	Período Orbital (días) 
+
 pl_orbsmax	Semieje Mayor de la Órbita (UA) 
+
 pl_rade	Radio del Planeta (en radios terrestres) 
+
 pl_orbeccen	Excentricidad Orbital 
+
 pl_insol	Flujo de Insolación (relativo a la Tierra) 
+
 pl_eqt	Temperatura de Equilibrio del Planeta (K) 
+
 st_teff	Temperatura Efectiva Estelar (K) 
 st_rad	Radio Estelar (en radios solares) 
+
 st_mass	Masa Estelar (en masas solares) 
+
 st_met	Metalicidad Estelar ([dex]) 
+
 st_logg	Gravedad Superficial Estelar (log(g) en cgs) 
+
 sy_snum	Número de Estrellas en el Sistema 
+
 sy_pnum	Número de Planetas en el Sistema 
+
 sy_gaiamag	Magnitud Gaia del Sistema 
  
   
@@ -50,40 +59,16 @@ El conjunto de datos se divide de la siguiente manera para garantizar una evalua
 La división se realiza de forma estratificada (stratify=y) para mantener la proporción de clases en todos los conjuntos. 
 Requisitos de Hardware 
 
-     CPU: 4+ núcleos recomendados.
      RAM: 8GB+ recomendados.
-     Almacenamiento: ~500 MB de espacio libre para datos y modelos.
+     Almacenamiento: ~200 MB de espacio libre para datos y modelos.
      Tiempo de ejecución: ~15-90 minutos (dependiendo del hardware).
      
 
-Configuración del Entorno 
-Método 1: Usando pip 
-bash
- 
-  
-# Crear un entorno virtual
-  python -m venv exo-ml-env
-  source exo-ml-env/bin/activate  
-  En Windows: exo-ml-env\Scripts\activate
+# Configuración del Entorno 
 
-# Instalar dependencias
+ Instalar dependencias
 pip install -r requirements.txt
- 
- 
- 
-Método 2: Usando conda 
-bash
- 
-  
-# Crear un entorno conda
-conda create -n exo-ml-env python=3.8
-conda activate exo-ml-env
 
-# Instalar dependencias
-pip install -r requirements.txt
- 
- 
- 
 Ejecución del Proyecto 
 Para ejecutar todo el pipeline de principio a fin: 
 bash
@@ -116,12 +101,7 @@ bash
   
 bash scripts/evaluate_models.sh
  
- 
- 
-Nota sobre Reproducibilidad 
 
-Este proyecto fija semillas aleatorias en todas las librerías (numpy, random, scikit-learn) para garantizar la reproducibilidad. Sin embargo, algunos modelos (como Random Forest) pueden mostrar ligeras variaciones debido a la paralelización (n_jobs=-1) y diferencias en la arquitectura del hardware. Se ha configurado SKLEARN_SITE_JOBLIB para mitigar este efecto en la medida de lo posible. 
-Esquema de Validación 
 
 Se utiliza una validación cruzada de 5 pliegues (cv=5) para la optimización de hiperparámetros con GridSearchCV y RandomizedSearchCV. La métrica principal para la optimización es el accuracy. Posteriormente, todos los modelos se evalúan en un conjunto de validación separado para una comparación justa, utilizando métricas como Accuracy, Precision, Recall, F1-Score y AUC. 
 
